@@ -34,6 +34,12 @@ This is the model's script. It takes the following arguments:
 Additional classes: 
 - `Dataset`: an object type that keeps data frame data and labels as tensors. 
 
-First, the script performs one-hot encoding fo all labels found in the input feature file.
+First, the script performs one-hot encoding fo all labels found in the input feature file. It uses `LabelBinarizer()` to do this. In the next step, all data are transformed to tensors and batches so that they can be loaded to the network properly. 
+
+The next step the script takes is the model definition. If `hiddensize` and `non_linearity` are not provided, the model consists of just one output layer with Softmax as its activation function. Otherwise the script add an extra hidden layer with user-specified hyperparameters before the output layer. The model is thus a simple Multi-Layer perceptron, regardless of its configuration.
+
+The most crucial step is the model training. It is performed in 20 epochs. At each epoch, the current loss function's value is displayed in the console. For the last epoch, predictions are saved in a list.
+
+Then, the model is tested on the test set, and eventually it is evaluated by comparing the saved predictions (they are also recorded for the test set) with the actual labels. Then, the program prints a confusion matrix generated through passing an iteratively-generated dictionary to the `pd.DataFrame` object instantiation call. In the end, the program also prints micro precision and micro recall to the console. 
 
 ## Enron Ethics 
